@@ -20,6 +20,9 @@
   },
   "homepage": "https://github.com/jcampbell57/weather-app#readme",
   "devDependencies": {
+    "@babel/core": "^7.18.13",
+    "@babel/preset-env": "^7.18.10",
+    "babel-loader": "^8.2.5",
     "css-loader": "^6.7.1",
     "eslint": "^8.23.0",
     "eslint-config-airbnb-base": "^15.0.0",

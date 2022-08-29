@@ -1,5 +1,5 @@
 import './reset.css';
 import './style.css';
-import component from './pageLoader';
+import createContentContainer from './pageLoader';
 
-document.body.appendChild(component());
+document.body.appendChild(createContentContainer());

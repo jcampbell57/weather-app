@@ -1,5 +1,40 @@
+:root {
+    --primary: royalblue;
+    --secondary: rgb(210, 238, 255);
+    --white: whitesmoke;
+    --error: darkred;
+}
 
 body {
     /* system font stack */
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue",sans-serif;
+    background-color: var(--secondary);
+}
+
+.WeatherAPIContainter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.5rem;
+}
+
+.APISearchBtn {
+    background-color: var(--primary);
+    color: var(--white);
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.5rem;
+}
+
+.APISearchBtn:hover {
+    cursor: pointer;
+    box-shadow: 1px 1px 1px rgb(0, 0, 0, 0.2);
+}
+
+.APISearchBtn:active {
+    box-shadow: 1px 1px 1px rgb(0, 0, 0, 0.4);
+}
+
+.APIErrorContainer {
+    color: var(--error);
 }

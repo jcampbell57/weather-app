@@ -24,6 +24,12 @@ const fetchWeather = (cityQuery) => {
     .then((response) => response.json())
     .then((response) => {
       console.log(response);
+      // eslint-disable-next-line no-plusplus
+      for (let i = 0; i < 40; i++) {
+        // console.log(response.list[i]);
+        console.log(response.list[i].dt_txt);
+        console.log('current temp: ', response.list[i].main.temp);
+      }
       // console.log('Weather condition: ', response.list.weather.main);
       // console.log('Main temperature: ', response.list.main.temp);
       // console.log('Low temperature: ', response.list.main.temp_min);
@@ -33,7 +39,6 @@ const fetchWeather = (cityQuery) => {
       console.log(err);
       APIErrorContainer.innerText = 'City not found';
     });
-
 };
 
 const APICitySearch = () => {
@@ -46,7 +51,6 @@ const APICitySearch = () => {
   if (APISearchInput.value === '') {
     APIErrorContainer.innerText = 'Which city?';
   } else {
-    console.log(APISearchInput.value);
     fetchWeather(APISearchInput.value);
   }
 };

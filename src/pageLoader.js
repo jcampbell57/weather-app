@@ -1,5 +1,7 @@
+document.cookie = 'SameSite=Lax';
+
 const fetchWeather = (cityQuery) => {
-  // const APIPractice = document.querySelector('.APIPractice');
+  const APIImage = document.querySelector('.APIImage');
   const APIErrorContainer = document.querySelector('.APIErrorContainer');
 
   // fetch current weather
@@ -11,8 +13,7 @@ const fetchWeather = (cityQuery) => {
       console.log('Current temperature: ', response.main.temp);
       console.log('Low temperature: ', response.main.temp_min);
       console.log('High temperature: ', response.main.temp_max);
-      console.log(response);
-      // APIPractice.src = response.data.images.original.url;
+      APIImage.src = `http://openweathermap.org/img/wn/${response.weather[0].icon}@2x.png`;
     })
     .catch((err) => {
       console.log(err);
@@ -28,7 +29,7 @@ const fetchWeather = (cityQuery) => {
       for (let i = 0; i < 40; i++) {
         // console.log(response.list[i]);
         console.log(response.list[i].dt_txt);
-        console.log('current temp: ', response.list[i].main.temp);
+        console.log('Temperature: ', response.list[i].main.temp);
       }
       // console.log('Weather condition: ', response.list.weather.main);
       // console.log('Main temperature: ', response.list.main.temp);
@@ -59,7 +60,7 @@ const createWeatherAPI = () => {
   // create Weather API container
   const WeatherAPIContainter = document.createElement('div');
   WeatherAPIContainter.classList.add('WeatherAPIContainter', 'content');
-  WeatherAPIContainter.id = 'APIPractice';
+  // WeatherAPIContainter.id = '';
 
   // create API title
   const APITitle = document.createElement('h3');
@@ -70,8 +71,8 @@ const createWeatherAPI = () => {
   // APIImageContainer.classList.add('APIImageContainer');
 
   // create API img
-  // const APIPractice = document.createElement('img');
-  // APIPractice.classList.add('APIPractice');
+  const APIImage = document.createElement('img');
+  APIImage.classList.add('APIImage');
 
   // search input
   const APISearchInput = document.createElement('input');
@@ -90,16 +91,16 @@ const createWeatherAPI = () => {
 
   // Append
   WeatherAPIContainter.appendChild(APITitle);
-  // APIImageContainer.appendChild(APIPractice);
+  // APIImageContainer.appendChild(APIImage);
   WeatherAPIContainter.appendChild(APISearchInput);
   WeatherAPIContainter.appendChild(APISearchBtn);
   WeatherAPIContainter.appendChild(APIErrorContainer);
+  WeatherAPIContainter.appendChild(APIImage);
   // WeatherAPIContainter.appendChild(APIImageContainer);
   // container.appendChild(WeatherAPIContainter);
 
   return WeatherAPIContainter;
 };
-
 
 export default function createContentContainer() {
   // create content container

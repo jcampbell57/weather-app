@@ -1,5 +1,17 @@
 document.cookie = 'SameSite=Lax';
 
+function toDirection(degree) {
+  if(degree>337.5) return 'North';
+  if(degree>292.5) return 'North West';
+  if(degree>247.5) return 'West';
+  if(degree>202.5) return 'South West';
+  if(degree>157.5) return 'South';
+  if(degree>122.5) return 'South East';
+  if(degree>67.5) return 'East';
+  if(degree>22.5) return 'North East';
+  return 'North';
+}
+
 const fetchWeather = (cityQuery) => {
   const APIImage = document.querySelector('.APIImage');
   const APIErrorContainer = document.querySelector('.APIErrorContainer');
@@ -10,6 +22,11 @@ const fetchWeather = (cityQuery) => {
     .then((response) => {
       console.log(response);
       console.log('Weather condition: ', response.weather[0].main);
+      console.log('Weather description: ', response.weather[0].description);
+      console.log('Humidity: ', response.main.humidity);
+      console.log('Wind degree: ', response.wind.deg);
+      console.log('Wind direction: ', toDirection(response.wind.deg));
+      console.log('Wind Speed: ', response.wind.speed);
       console.log('Current temperature: ', response.main.temp);
       console.log('Low temperature: ', response.main.temp_min);
       console.log('High temperature: ', response.main.temp_max);
@@ -29,12 +46,16 @@ const fetchWeather = (cityQuery) => {
       for (let i = 0; i < 40; i++) {
         // console.log(response.list[i]);
         console.log(response.list[i].dt_txt);
+        console.log('Weather condition: ', response.list[i].weather[0].main);
+        console.log('Weather description: ', response.list[i].weather[0].description);
+        console.log('Humidity: ', response.list[i].main.humidity);
+        console.log('Wind degree: ', response.list[i].wind.deg);
+        console.log('Wind direction: ', toDirection(response.list[i].main.temp));
+        console.log('Wind Speed: ', response.list[i].wind.speed);
+        console.log('Wind Gust: ', response.list[i].wind.gust);
         console.log('Temperature: ', response.list[i].main.temp);
+        // .src = `http://openweathermap.org/img/wn/${response.list[i].weather[0].icon}.png`
       }
-      // console.log('Weather condition: ', response.list.weather.main);
-      // console.log('Main temperature: ', response.list.main.temp);
-      // console.log('Low temperature: ', response.list.main.temp_min);
-      // console.log('High temperature: ', response.list.main.temp_max);
     })
     .catch((err) => {
       console.log(err);

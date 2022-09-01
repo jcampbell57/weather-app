@@ -31,6 +31,19 @@ const fetchWeather = (cityQuery) => {
       console.log('Low temperature: ', response.main.temp_min);
       console.log('High temperature: ', response.main.temp_max);
       APIImage.src = `http://openweathermap.org/img/wn/${response.weather[0].icon}@2x.png`;
+      const newWeatherCard = {
+        weatherCondition: response.weather[0].main,
+        weatherDescription: response.weather[0].description,
+        humidity: response.main.humidity,
+        windDegree: response.wind.deg,
+        windDirection: toDirection(response.wind.deg),
+        windSpeed: response.wind.speed,
+        currentTemp: response.main.temp,
+        lowTemp: response.main.temp_min,
+        highTemp: response.main.temp_max
+      }
+      console.log(newWeatherCard)
+      return newWeatherCard
     })
     .catch((err) => {
       console.log(err);
@@ -42,6 +55,7 @@ const fetchWeather = (cityQuery) => {
     .then((response) => response.json())
     .then((response) => {
       console.log(response);
+      const newWeatherForecastArray = [];
       // eslint-disable-next-line no-plusplus
       for (let i = 0; i < 40; i++) {
         // console.log(response.list[i]);
@@ -55,7 +69,21 @@ const fetchWeather = (cityQuery) => {
         console.log('Wind Gust: ', response.list[i].wind.gust);
         console.log('Temperature: ', response.list[i].main.temp);
         // .src = `http://openweathermap.org/img/wn/${response.list[i].weather[0].icon}.png`
+        const newWeatherForecast = {
+          weatherCondition: response.list[i].weather[0].main,
+          weatherDescription: response.list[i].weather[0].description,
+          humidity: response.list[i].main.humidity,
+          windDegree: response.list[i].wind.deg,
+          windDirection: toDirection(response.list[i].wind.deg),
+          windSpeed: response.list[i].wind.speed,
+          windGust: response.list[i].wind.gust,
+          temperature: response.list[i].main.temp,
+        }
+        console.log(newWeatherForecast)
+        newWeatherForecastArray.push(newWeatherForecast)
       }
+      console.log(newWeatherForecastArray)
+      return newWeatherForecastArray
     })
     .catch((err) => {
       console.log(err);

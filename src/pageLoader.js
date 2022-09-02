@@ -23,15 +23,22 @@ const fetchWeather = (cityQuery) => {
       console.log(response);
       APIImage.src = `http://openweathermap.org/img/wn/${response.weather[0].icon}@2x.png`;
       const newWeatherCard = {
+        city: response.name,
+        country: response.sys.country,
+        currentTemp: response.main.temp,
+        highTemp: response.main.temp_max,
+        humidity: response.main.humidity,
+        localTime: response.dt,
+        // localDate: new Date(response.dt*1000+(response.timezone*1000)),
+        lowTemp: response.main.temp_min,
+        sunrise: response.sys.sunrise,
+        sunset: response.sys.sunset, 
         weatherCondition: response.weather[0].main,
         weatherDescription: response.weather[0].description,
-        humidity: response.main.humidity,
         windDegree: response.wind.deg,
         windDirection: toDirection(response.wind.deg),
         windSpeed: response.wind.speed,
-        currentTemp: response.main.temp,
-        lowTemp: response.main.temp_min,
-        highTemp: response.main.temp_max
+        windGust: response.wind.gust
       }
       console.log(newWeatherCard)
       return newWeatherCard

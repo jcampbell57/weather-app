@@ -12,10 +12,6 @@ function toDirection(degree) {
   return 'North';
 }
 
-const fetchWeather = (cityQuery) => {
-  const APIImage = document.querySelector('.APIImage');
-  const APIErrorContainer = document.querySelector('.APIErrorContainer');
-
 // https://stackoverflow.com/questions/62376115/how-to-obtain-open-weather-api-date-time-from-city-being-fetched
 const calcCurrentTime = (timezone) => {
   const d = new Date();
@@ -33,6 +29,10 @@ const calcSunTime = (time, timezone) => {
   const newCity = utc + (1000 * timezone)
   return new Date(newCity);
 }
+
+const fetchWeather = (cityQuery) => {
+  const APIImage = document.querySelector('.APIImage');
+  const APIErrorContainer = document.querySelector('.APIErrorContainer');
 
   // fetch current weather
   fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityQuery}&units=imperial&APPID=0a9fdbdfcd0f62e9bd7a200797b10d4e`, { mode: 'cors' })
@@ -78,6 +78,7 @@ const calcSunTime = (time, timezone) => {
           date: new Date(response.list[i].dt_txt),
           dateText: response.list[i].dt_txt,
           humidity: response.list[i].main.humidity,
+          rainChance: response.list[i].pop * 100,
           temperature: response.list[i].main.temp,
           weatherCondition: response.list[i].weather[0].main,
           weatherDescription: response.list[i].weather[0].description,

@@ -16,6 +16,24 @@ const fetchWeather = (cityQuery) => {
   const APIImage = document.querySelector('.APIImage');
   const APIErrorContainer = document.querySelector('.APIErrorContainer');
 
+// https://stackoverflow.com/questions/62376115/how-to-obtain-open-weather-api-date-time-from-city-being-fetched
+const calcCurrentTime = (timezone) => {
+  const d = new Date();
+  const localTime = d.getTime();
+  const localOffset = d.getTimezoneOffset() * 60000;
+  const utc = localTime + localOffset;
+  const newCity = utc + (1000 * timezone)
+  return new Date(newCity);
+}
+
+const calcSunTime = (time, timezone) => {
+  const d = new Date();
+  const localOffset = d.getTimezoneOffset() * 60000;
+  const utc = time + localOffset;
+  const newCity = utc + (1000 * timezone)
+  return new Date(newCity);
+}
+
   // fetch current weather
   fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityQuery}&units=imperial&APPID=0a9fdbdfcd0f62e9bd7a200797b10d4e`, { mode: 'cors' })
     .then((response) => response.json())
@@ -25,14 +43,13 @@ const fetchWeather = (cityQuery) => {
       const newWeatherCard = {
         city: response.name,
         country: response.sys.country,
-        currentTemp: response.main.temp,
-        highTemp: response.main.temp_max,
         humidity: response.main.humidity,
-        localTime: response.dt,
-        // localDate: new Date(response.dt*1000+(response.timezone*1000)),
-        lowTemp: response.main.temp_min,
-        sunrise: response.sys.sunrise,
-        sunset: response.sys.sunset, 
+        localDate: calcCurrentTime(response.timezone),
+        sunrise: calcSunTime(response.sys.sunrise * 1000, response.timezone),
+        sunset: calcSunTime(response.sys.sunset * 1000, response.timezone), 
+        tempCurrent: response.main.temp,
+        tempHigh: response.main.temp_max,
+        tempLow: response.main.temp_min,
         weatherCondition: response.weather[0].main,
         weatherDescription: response.weather[0].description,
         windDegree: response.wind.deg,
@@ -58,15 +75,16 @@ const fetchWeather = (cityQuery) => {
       for (let i = 0; i < 40; i++) {
         // .src = `http://openweathermap.org/img/wn/${response.list[i].weather[0].icon}.png`
         const newWeatherForecast = {
-          date: response.list[i].dt_txt,
+          date: new Date(response.list[i].dt_txt),
+          dateText: response.list[i].dt_txt,
+          humidity: response.list[i].main.humidity,
+          temperature: response.list[i].main.temp,
           weatherCondition: response.list[i].weather[0].main,
           weatherDescription: response.list[i].weather[0].description,
-          humidity: response.list[i].main.humidity,
           windDegree: response.list[i].wind.deg,
           windDirection: toDirection(response.list[i].wind.deg),
-          windSpeed: response.list[i].wind.speed,
           windGust: response.list[i].wind.gust,
-          temperature: response.list[i].main.temp,
+          windSpeed: response.list[i].wind.speed,
         }
         newWeatherForecastArray.push(newWeatherForecast)
       }

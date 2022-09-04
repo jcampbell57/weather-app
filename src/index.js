@@ -1,5 +1,5 @@
-import './reset.css';
-import './style.css';
-import createContentContainer from './pageLoader';
+import './reset.css'
+import './style.css'
+import initialize from './pageLoader'
 
-document.body.appendChild(createContentContainer());
+initialize()

@@ -7,9 +7,43 @@
 
 body {
     /* system font stack */
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue",sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+        Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
     background-color: var(--secondary);
+    display: grid;
+    grid-template-columns: 250px calc(100vw - 250px);
+    grid-template-rows: 110px calc(100vh - 110px - 62px) 62px;
+    margin: 0;
+    box-sizing: border-box;
+    max-width: 100vw;
+    max-height: 100vh;
 }
+
+/* Header styling */
+
+.logo {
+    max-height: 90%;
+    margin-right: 8px;
+    /* whitesmoke color */
+    filter: invert(100%) sepia(0%) saturate(7480%) hue-rotate(201deg)
+        brightness(107%) contrast(92%);
+}
+
+header {
+    grid-column: 1 / -1;
+    color: var(--white);
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+header > h1 {
+    font-size: 2em;
+    font-weight: bolder;
+}
+
+/* Content styling */
 
 .WeatherAPIContainter {
     display: flex;

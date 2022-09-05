@@ -1,5 +1,11 @@
-import logoIcon from './assets/logoIcon.svg'
 import APICitySearch from './weatherAPI'
+import {
+    createAdditionIcon,
+    createForm,
+    // displayWatchlist,
+} from './helperFunctions'
+import githubIcon from './assets/GitHub-light-32px.png'
+import logoIcon from './assets/logoIcon.svg'
 
 const createHeader = () => {
     const header = document.createElement('header')
@@ -19,13 +25,60 @@ const createHeader = () => {
     return header
 }
 
-const createMenu = () => {}
+const createMenu = () => {
+    const menu = document.createElement('div')
+    menu.setAttribute('class', 'menu')
+
+    // create watchlist header
+    const watchlistHeader = document.createElement('p')
+    watchlistHeader.setAttribute('class', 'watchlistHeader')
+    watchlistHeader.textContent = 'Watchlist'
+
+    // create watchlist menu
+    const watchlist = document.createElement('ul')
+    watchlist.setAttribute('class', 'watchlist')
+    watchlist.setAttribute('id', 'watchlist')
+
+    // displayWatchlist()
+
+    // Generate add location container
+    const addLocationContainer = document.createElement('ul')
+    addLocationContainer.setAttribute('class', 'watchlist')
+
+    // Generate add location button
+    const addLocation = document.createElement('li')
+    addLocation.setAttribute('class', 'addLocationBtn')
+    createAdditionIcon(addLocation)
+    const addLocationText = document.createElement('span')
+    addLocationText.innerText = 'Add Location'
+    addLocation.appendChild(addLocationText)
+    addLocationContainer.appendChild(addLocation)
+
+    // Generate and hide new location form
+    const addLocationForm = document.createElement('form')
+    addLocationForm.setAttribute('class', 'addLocationForm')
+    addLocationForm.setAttribute('id', 'hidden')
+    addLocationForm.method = 'get'
+    createForm(addLocationForm)
+    addLocationContainer.appendChild(addLocationForm)
+
+    menu.appendChild(watchlistHeader)
+    menu.appendChild(watchlist)
+    menu.appendChild(addLocationContainer)
+
+    return menu
+}
 
 const createWeatherAPI = () => {
     // create Weather API container
     const WeatherAPIContainter = document.createElement('div')
     WeatherAPIContainter.classList.add('WeatherAPIContainter', 'content')
     // WeatherAPIContainter.id = '';
+
+    // create API title
+    const APITitle = document.createElement('h3')
+    APITitle.classList.add('contentTitle')
+    APITitle.innerText = 'Weatherserve'
 
     // create API image container
     // const APIImageContainer = document.createElement('div');
@@ -51,6 +104,7 @@ const createWeatherAPI = () => {
     APIErrorContainer.classList.add('APIErrorContainer')
 
     // Append
+    WeatherAPIContainter.appendChild(APITitle)
     // APIImageContainer.appendChild(APIImage);
     WeatherAPIContainter.appendChild(APISearchInput)
     WeatherAPIContainter.appendChild(APISearchBtn)
@@ -64,18 +118,39 @@ const createWeatherAPI = () => {
 
 const createContent = () => {
     // create content container
-    const contentContainter = document.createElement('div')
-    contentContainter.classList.add('contentContainer')
+    const content = document.createElement('div')
+    content.classList.add('content')
 
     // create weather app
-    contentContainter.appendChild(createWeatherAPI())
+    content.appendChild(createWeatherAPI())
 
-    return contentContainter
+    return content
 }
 
-const createFooter = () => {}
+const createFooter = () => {
+    const footer = document.createElement('footer')
+
+    const copyright = document.createElement('p')
+    copyright.textContent = `Copyright © ${new Date().getFullYear()} jcampbell57`
+
+    const githubLink = document.createElement('a')
+    githubLink.href = 'https://github.com/jcampbell57'
+    githubLink.target = '_blank'
+
+    const newGithubIcon = document.createElement('img')
+    newGithubIcon.src = githubIcon
+    newGithubIcon.setAttribute('class', 'github')
+
+    githubLink.appendChild(newGithubIcon)
+    footer.appendChild(copyright)
+    footer.appendChild(githubLink)
+
+    return footer
+}
 
 export default function initialize() {
     document.body.appendChild(createHeader())
+    document.body.appendChild(createMenu())
     document.body.appendChild(createContent())
+    document.body.appendChild(createFooter())
 }

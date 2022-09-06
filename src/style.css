@@ -1,11 +1,10 @@
 /* Page styling */
 
 :root {
-    --panel: rgba(255, 255, 255, 0.5);
-    /* --primary: rgb(210, 238, 255); */
-    --primary: royalblue;
-    --secondary: rgb(0, 10, 39);
-    --white: whitesmoke;
+    --panel: rgba(255, 255, 255, 0.6);
+    --accent: royalblue;
+    --background: rgb(0, 10, 39);
+    --white-ish: whitesmoke;
     --error: darkred;
 }
 
@@ -13,7 +12,7 @@ body {
     /* system font stack */
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
         Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
-    background-color: var(--secondary);
+    background-color: var(--background);
     display: grid;
     grid-template-columns: 250px calc(100vw - 250px);
     grid-template-rows: 110px calc(100vh - 110px - 62px) 62px;
@@ -38,6 +37,10 @@ h1 {
     display: none;
 }
 
+#showBlock {
+    display: block;
+}
+
 /* Header styling */
 
 .logo {
@@ -50,7 +53,7 @@ h1 {
 
 header {
     grid-column: 1 / -1;
-    color: var(--white);
+    color: var(--white-ish);
     padding: 10px;
     display: flex;
     align-items: center;
@@ -62,7 +65,7 @@ header {
 .menu {
     background-color: var(--panel);
     border-radius: 1rem;
-    margin: 0.5rem;
+    margin-left: 0.5rem;
 }
 
 .menu > ul.watchlist {
@@ -117,10 +120,64 @@ li.selected {
 
 /* Form styling */
 
+.addLocationForm {
+    padding: 0;
+}
+
+.formRow {
+    display: flex;
+    justify-content: space-around;
+    gap: 8px;
+}
+
+#formButtons {
+    margin-top: 8px;
+}
+
+.newLocationInput {
+    padding: 6px;
+    font-size: 1.2rem;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.addBtn,
+.cancelBtn {
+    padding: 8px;
+    width: 50%;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    color: var(--white-ish);
+    font-weight: 550;
+}
+
+.addBtn {
+    background-color: var(--accent);
+    border: 2px solid hsl(225, 73%, 30%);
+}
+
+.cancelBtn {
+    background-color: mediumvioletred;
+    border: 2px solid hsl(322, 81%, 30%);
+}
+
+.addBtn:hover,
+.cancelBtn:hover {
+    box-shadow: 2px 2px 6px rgb(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.addBtn:active,
+.cancelBtn:active {
+    box-shadow: 2px 2px 6px rgb(0, 0, 0, 0.4);
+}
+
 /* Content styling */
 
 .content {
-    margin: 0.5rem;
+    margin: 0 0.5rem;
     font-size: 1.2rem;
     max-width: 1000px;
     box-sizing: border-box;
@@ -144,8 +201,8 @@ li.selected {
 }
 
 .APISearchBtn {
-    background-color: var(--primary);
-    color: var(--white);
+    background-color: var(--accent);
+    color: var(--white-ish);
     padding: 0.5rem 1.5rem;
     border-radius: 0.5rem;
 }
@@ -167,8 +224,8 @@ li.selected {
 
 footer {
     grid-column: 1 / -1;
-    /* background-color: var(--secondary-color); */
-    color: var(--white);
+    /* background-color: var(--background-color); */
+    color: var(--white-ish);
     font-size: 1.2rem;
     display: flex;
     align-items: center;

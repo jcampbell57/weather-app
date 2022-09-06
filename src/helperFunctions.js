@@ -33,6 +33,13 @@ const setTaskFilter = (li) => {
     displayWatchlist()
 }
 
+const createMenuIcon = (li) => {
+    const checklistIcon = document.createElement('img')
+    checklistIcon.src = menuIcon
+    checklistIcon.setAttribute('class', 'icon')
+    li.appendChild(checklistIcon)
+}
+
 // Display entire array of locations to watchlist
 const displayWatchlist = () => {
     // Grab projects menu
@@ -87,7 +94,7 @@ const displayWatchlist = () => {
 const createAddButton = (container) => {
     const addBtn = document.createElement('button')
     addBtn.setAttribute('class', 'addBtn')
-    addBtn.innerText = 'submit'
+    addBtn.innerText = 'search'
     addBtn.classList.add('locationAddBtn')
     addBtn.addEventListener('click', (e) => APICitySearch(e))
     container.appendChild(addBtn)
@@ -95,13 +102,13 @@ const createAddButton = (container) => {
 
 const createCancelButton = (container, i) => {
     const cancelBtn = document.createElement('button')
-    cancelBtn.setAttribute('class', 'cancelBtn')
+    cancelBtn.classList.add('cancelBtn')
     cancelBtn.setAttribute('id', `${i}`)
     cancelBtn.innerText = 'cancel'
-    cancelBtn.addEventListener('click', (e) => {
-        e.preventDefault()
-        displayWatchlist()
-    })
+    // cancelBtn.addEventListener('click', (e) => {
+    //     e.preventDefault()
+    //     displayWatchlist()
+    // })
     container.appendChild(cancelBtn)
 }
 
@@ -117,10 +124,14 @@ const createForm = (form) => {
     const formRow3 = document.createElement('div')
     formRow3.setAttribute('id', 'hidden')
 
-    // row one: assign input according to class of form
-    // row three: assign error class and text according to class of form
-    formRow1.innerHTML =
-        "<input type='text' id='newProjectInput' name='newProjectInput'></input>"
+    // row one: assign input
+    const newLocationInput = document.createElement('input')
+    newLocationInput.classList.add('newLocationInput')
+    newLocationInput.placeholder = 'Florence'
+    newLocationInput.name = 'newLocationInput'
+    formRow1.appendChild(newLocationInput)
+
+    // row three: assign error class and text
     formRow3.setAttribute('class', 'newProjErrorContainer')
     formRow3.innerText = 'Which city?'
 
@@ -160,13 +171,6 @@ const deleteWatchlistEntry = (e) => {
 
     // refresh watchist
     displayWatchlist()
-}
-
-const createMenuIcon = (li) => {
-    const checklistIcon = document.createElement('img')
-    checklistIcon.src = menuIcon
-    checklistIcon.setAttribute('class', 'icon')
-    li.appendChild(checklistIcon)
 }
 
 const createDeleteIcon = (container, i) => {

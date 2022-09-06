@@ -131,7 +131,15 @@ const fetchCurrentWeather = (cityQuery) => {
         })
 }
 
-const APICitySearch = () => {
+const APICitySearch = (input) => {
+    fetchCurrentWeather(input)
+    fetchHourlyForecast(input)
+}
+
+// Placeholder Content
+APICitySearch('Florence')
+
+const validateSearch = () => {
     // grab dom elements
     const APISearchInput = document.querySelector('.APISearchInput')
     const APIErrorContainer = document.querySelector('.APIErrorContainer')
@@ -141,9 +149,8 @@ const APICitySearch = () => {
     if (APISearchInput.value === '') {
         APIErrorContainer.innerText = 'Which city?'
     } else {
-        fetchCurrentWeather(APISearchInput.value)
-        fetchHourlyForecast(APISearchInput.value)
+        APICitySearch(APISearchInput.value)
     }
 }
 
-export default APICitySearch
+export default validateSearch

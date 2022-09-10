@@ -139,17 +139,20 @@ const APICitySearch = (input) => {
 // Placeholder Content
 APICitySearch('Florence')
 
-const validateSearch = () => {
+const validateSearch = (e) => {
+    e.preventDefault()
     // grab dom elements
-    const APISearchInput = document.querySelector('.APISearchInput')
-    const APIErrorContainer = document.querySelector('.APIErrorContainer')
+    const newLocationInput = document.querySelector('.newLocationInput')
+    const newProjErrorContainer = document.querySelector(
+        '.newProjErrorContainer'
+    )
     // reset error
-    APIErrorContainer.innerText = ''
+    newProjErrorContainer.innerText = ''
     // check for search term
-    if (APISearchInput.value === '') {
-        APIErrorContainer.innerText = 'Which city?'
+    if (newLocationInput.value === '') {
+        newProjErrorContainer.innerText = 'Which city?'
     } else {
-        APICitySearch(APISearchInput.value)
+        APICitySearch(newLocationInput.value)
     }
 }
 

@@ -1,4 +1,3 @@
-import APICitySearch from './weatherAPI'
 import {
     createAdditionIcon,
     createForm,
@@ -88,27 +87,10 @@ const createWeatherAPI = () => {
     const APIImage = document.createElement('img')
     APIImage.classList.add('APIImage')
 
-    // search input
-    const APISearchInput = document.createElement('input')
-    APISearchInput.classList.add('APISearchInput')
-    APISearchInput.placeholder = 'Seattle'
-
-    // search button
-    const APISearchBtn = document.createElement('div')
-    APISearchBtn.classList.add('APISearchBtn')
-    APISearchBtn.innerText = 'Search'
-    APISearchBtn.addEventListener('click', APICitySearch)
-
-    // error container
-    const APIErrorContainer = document.createElement('div')
-    APIErrorContainer.classList.add('APIErrorContainer')
-
     // Append
     WeatherAPIContainter.appendChild(APITitle)
     // APIImageContainer.appendChild(APIImage);
-    WeatherAPIContainter.appendChild(APISearchInput)
-    WeatherAPIContainter.appendChild(APISearchBtn)
-    WeatherAPIContainter.appendChild(APIErrorContainer)
+
     WeatherAPIContainter.appendChild(APIImage)
     // WeatherAPIContainter.appendChild(APIImageContainer);
     // container.appendChild(WeatherAPIContainter);

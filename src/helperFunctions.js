@@ -1,5 +1,5 @@
 import additionIcon from './assets/plus.svg'
-import APICitySearch from './weatherAPI'
+import validateForm from './weatherAPI'
 import deleteIcon from './assets/delete.svg'
 import menuIcon from './assets/menuIcon.svg'
 
@@ -93,10 +93,9 @@ const displayWatchlist = () => {
 
 const createAddButton = (container) => {
     const addBtn = document.createElement('button')
-    addBtn.setAttribute('class', 'addBtn')
+    addBtn.classList.add('addBtn')
     addBtn.innerText = 'search'
-    addBtn.classList.add('locationAddBtn')
-    addBtn.addEventListener('click', (e) => APICitySearch(e))
+    addBtn.addEventListener('click', (e) => validateForm(e))
     container.appendChild(addBtn)
 }
 
@@ -114,30 +113,27 @@ const createCancelButton = (container, i) => {
 
 // createForm
 const createForm = (form) => {
+    // row one: assign input
     const formRow1 = document.createElement('div')
     formRow1.setAttribute('class', 'formRow')
-
-    const formRow2 = document.createElement('div')
-    formRow2.setAttribute('class', 'formRow')
-    formRow2.setAttribute('id', 'formButtons')
-
-    const formRow3 = document.createElement('div')
-    formRow3.setAttribute('id', 'hidden')
-
-    // row one: assign input
     const newLocationInput = document.createElement('input')
     newLocationInput.classList.add('newLocationInput')
     newLocationInput.placeholder = 'Florence'
     newLocationInput.name = 'newLocationInput'
     formRow1.appendChild(newLocationInput)
 
-    // row three: assign error class and text
-    formRow3.setAttribute('class', 'newProjErrorContainer')
-    formRow3.innerText = 'Which city?'
-
     // row two: submit and cancel buttons
+    const formRow2 = document.createElement('div')
+    formRow2.setAttribute('class', 'formRow')
+    formRow2.setAttribute('id', 'formButtons')
     createAddButton(formRow2, form)
     createCancelButton(formRow2, form)
+
+    // row three: assign error class and text
+    const formRow3 = document.createElement('div')
+    // formRow3.setAttribute('id', 'hidden')
+    formRow3.setAttribute('class', 'newProjErrorContainer')
+    // formRow3.innerText = 'Which city?'
 
     form.appendChild(formRow1)
     form.appendChild(formRow2)

@@ -1,8 +1,10 @@
 import './reset.css'
 import './style.css'
 import initialize from './pageLoader'
+import initiateStorage from './localStorage'
 
 initialize()
+initiateStorage()
 
 // Grab DOM elements
 const addLocationBtn = document.querySelector('.addLocationBtn')

@@ -1,7 +1,7 @@
 /* Page styling */
 
 :root {
-    --panel: rgba(255, 255, 255, 0.6);
+    --panel: rgba(255, 255, 255, 0.65);
     --accent: royalblue;
     --background: rgb(0, 10, 39);
     --white-ish: whitesmoke;

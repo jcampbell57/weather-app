@@ -1,5 +1,5 @@
 import additionIcon from './assets/plus.svg'
-import validateForm from './weatherAPI'
+import validateSearch from './weatherAPI'
 import deleteIcon from './assets/delete.svg'
 import menuIcon from './assets/menuIcon.svg'
 
@@ -40,6 +40,35 @@ const createMenuIcon = (li) => {
     li.appendChild(checklistIcon)
 }
 
+// Add single location to watchlist (called below)
+const createListing = (Proj, i) => {
+    const watchlist = document.querySelector('#watchlist')
+
+    const location = document.createElement('li')
+    location.classList.add(`location`)
+    location.setAttribute('id', `${i}`)
+    // assign class to selected location listing
+    if (Proj.selected === 'true') {
+        location.classList.add('selected')
+    }
+
+    // event listener to display selected location's weather
+    location.addEventListener('click', (e) => {
+        // if deleting listing, do not display weather
+        if (e.target.classList.contains('deleteItem')) {
+            return
+        }
+        setTaskFilter(location)
+    })
+
+    createMenuIcon(location)
+    const locationText = document.createElement('span')
+    locationText.textContent = Proj.name
+    location.appendChild(locationText)
+    createDeleteIcon(location, i)
+    watchlist.appendChild(location)
+}
+
 // Display entire array of locations to watchlist
 const displayWatchlist = () => {
     // Grab projects menu
@@ -50,33 +79,6 @@ const displayWatchlist = () => {
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < oldListingCount; i++) {
         watchlist.firstChild.remove()
-    }
-
-    // Add single location to watchlist (called below)
-    const createListing = (Proj, i) => {
-        const location = document.createElement('li')
-        location.classList.add(`location`)
-        location.setAttribute('id', `${i}`)
-        // assign class to selected location listing
-        if (Proj.selected === 'true') {
-            location.classList.add('selected')
-        }
-
-        // event listener to display selected location's weather
-        location.addEventListener('click', (e) => {
-            // if deleting listing, do not display weather
-            if (e.target.classList.contains('deleteItem')) {
-                return
-            }
-            setTaskFilter(location)
-        })
-
-        createMenuIcon(location)
-        const locationText = document.createElement('span')
-        locationText.textContent = Proj.name
-        location.appendChild(locationText)
-        createDeleteIcon(location, i)
-        watchlist.appendChild(location)
     }
 
     // Append all locations to watchlist
@@ -95,7 +97,7 @@ const createAddButton = (container) => {
     const addBtn = document.createElement('button')
     addBtn.classList.add('addBtn')
     addBtn.innerText = 'search'
-    addBtn.addEventListener('click', (e) => validateForm(e))
+    addBtn.addEventListener('click', (e) => validateSearch(e))
     container.appendChild(addBtn)
 }
 

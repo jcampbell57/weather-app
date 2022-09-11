@@ -137,7 +137,7 @@ const APICitySearch = (input) => {
 }
 
 // Placeholder Content
-APICitySearch('Florence')
+// APICitySearch('Florence')
 
 const validateSearch = (e) => {
     e.preventDefault()

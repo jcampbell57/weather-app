@@ -1,7 +1,101 @@
 import additionIcon from './assets/plus.svg'
-import validateSearch from './weatherAPI'
+// import APICitySearch from './weatherAPI'
 import deleteIcon from './assets/delete.svg'
 import menuIcon from './assets/menuIcon.svg'
+
+document.cookie = 'SameSite=Lax'
+
+const createMenuIcon = (li) => {
+    const checklistIcon = document.createElement('img')
+    checklistIcon.src = menuIcon
+    checklistIcon.setAttribute('class', 'icon')
+    li.appendChild(checklistIcon)
+}
+
+// Add single location to watchlist (called below)
+const createListing = (locationName, i) => {
+    const watchlist = document.querySelector('#watchlist')
+
+    const location = document.createElement('li')
+    location.classList.add(`location`)
+    location.setAttribute('id', `${i}`)
+    // assign class to selected location listing
+    if (locationName.selected === 'true') {
+        location.classList.add('selected')
+    }
+
+    // event listener to display selected location's weather
+    location.addEventListener('click', (e) => {
+        // if deleting listing, do not display weather
+        if (e.target.classList.contains('deleteItem')) {
+            return
+        }
+        selectLocation(location)
+    })
+
+    createMenuIcon(location)
+    const locationText = document.createElement('span')
+    locationText.textContent = locationName.name
+    location.appendChild(locationText)
+    createDeleteIcon(location, i)
+    watchlist.appendChild(location)
+}
+
+// Display entire array of locations to watchlist
+const displayWatchlist = () => {
+    // Grab watchlist
+    const watchlist = document.querySelector('#watchlist')
+
+    // Clear location listings
+    const oldListingCount = watchlist.childElementCount
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < oldListingCount; i++) {
+        watchlist.firstChild.remove()
+    }
+
+    // Append all locations to watchlist
+    let i = 0
+    const storageWatchlist = JSON.parse(
+        localStorage.getItem('storageWatchlist')
+    )
+    console.log(storageWatchlist)
+    storageWatchlist.forEach((location) => {
+        console.log(location.name)
+        createListing(location, i)
+        // eslint-disable-next-line no-plusplus
+        i++
+    })
+}
+
+const submitLocation = (input) => {
+    // create location object
+    const newLocation = {
+        name: input,
+        selected: true,
+    }
+
+    // grab array from storage
+    const storageWatchlist = JSON.parse(
+        localStorage.getItem('storageWatchlist')
+    )
+
+    // deselect previously selected location
+    storageWatchlist.forEach((location) => {
+        if (location.selected === true) {
+            location.selected = false
+        }
+    })
+
+    // push location to array
+    storageWatchlist.push(newLocation)
+    // console.log(storageWatchlist)
+
+    // set array back into storage
+    localStorage.setItem('storageWatchlist', JSON.stringify(storageWatchlist))
+
+    // refresh watchlist
+    displayWatchlist()
+}
 
 const selectLocation = (li) => {
     // set content title (filter)
@@ -33,66 +127,6 @@ const selectLocation = (li) => {
     displayWatchlist()
 }
 
-const createMenuIcon = (li) => {
-    const checklistIcon = document.createElement('img')
-    checklistIcon.src = menuIcon
-    checklistIcon.setAttribute('class', 'icon')
-    li.appendChild(checklistIcon)
-}
-
-// Add single location to watchlist (called below)
-const createListing = (Proj, i) => {
-    const watchlist = document.querySelector('#watchlist')
-
-    const location = document.createElement('li')
-    location.classList.add(`location`)
-    location.setAttribute('id', `${i}`)
-    // assign class to selected location listing
-    if (Proj.selected === 'true') {
-        location.classList.add('selected')
-    }
-
-    // event listener to display selected location's weather
-    location.addEventListener('click', (e) => {
-        // if deleting listing, do not display weather
-        if (e.target.classList.contains('deleteItem')) {
-            return
-        }
-        selectLocation(location)
-    })
-
-    createMenuIcon(location)
-    const locationText = document.createElement('span')
-    locationText.textContent = Proj.name
-    location.appendChild(locationText)
-    createDeleteIcon(location, i)
-    watchlist.appendChild(location)
-}
-
-// Display entire array of locations to watchlist
-const displayWatchlist = () => {
-    // Grab watchlist
-    const watchlist = document.querySelector('#watchlist')
-
-    // Clear location listings
-    const oldListingCount = watchlist.childElementCount
-    // eslint-disable-next-line no-plusplus
-    for (let i = 0; i < oldListingCount; i++) {
-        watchlist.firstChild.remove()
-    }
-
-    // Append all locations to watchlist
-    let i = 0
-    const storageWatchlist = JSON.parse(
-        localStorage.getItem('storageWatchlist')
-    )
-    storageWatchlist.forEach((location) => {
-        createListing(location, i)
-        // eslint-disable-next-line no-plusplus
-        i++
-    })
-}
-
 const createAddButton = (container) => {
     const addBtn = document.createElement('button')
     addBtn.classList.add('addBtn')
@@ -106,10 +140,6 @@ const createCancelButton = (container, i) => {
     cancelBtn.classList.add('cancelBtn')
     cancelBtn.setAttribute('id', `${i}`)
     cancelBtn.innerText = 'cancel'
-    // cancelBtn.addEventListener('click', (e) => {
-    //     e.preventDefault()
-    //     displayWatchlist()
-    // })
     container.appendChild(cancelBtn)
 }
 
@@ -180,10 +210,10 @@ const createDeleteIcon = (container, i) => {
 
     // ADD EVENT LISTENER
     if (
-        container.getAttribute('class') === 'project' ||
-        container.classList.contains('project')
+        container.getAttribute('class') === 'location' ||
+        container.classList.contains('location')
     ) {
-        // Event listener to delete project
+        // Event listener to delete location
         newDeleteIcon.classList.add(
             `deleteWatchlistEntry`,
             `deleteWatchlistEntry${i}`,
@@ -220,10 +250,177 @@ const createAdditionIcon = (li) => {
     li.appendChild(newAdditionIcon)
 }
 
+const validateSearch = (e) => {
+    e.preventDefault()
+    // grab dom elements
+    const newLocationInput = document.querySelector('.newLocationInput')
+    const newProjErrorContainer = document.querySelector(
+        '.newProjErrorContainer'
+    )
+    // reset error
+    newProjErrorContainer.innerText = ''
+    // check for search term
+    if (newLocationInput.value === '') {
+        newProjErrorContainer.innerText = 'Which city?'
+    } else {
+        APICitySearch(newLocationInput.value)
+    }
+}
+
+// #########################
+// Openweather API Functions
+// #########################
+
+function toDirection(degree) {
+    if (degree > 337.5) return 'North'
+    if (degree > 292.5) return 'North West'
+    if (degree > 247.5) return 'West'
+    if (degree > 202.5) return 'South West'
+    if (degree > 157.5) return 'South'
+    if (degree > 122.5) return 'South East'
+    if (degree > 67.5) return 'East'
+    if (degree > 22.5) return 'North East'
+    return 'North'
+}
+
+// https://stackoverflow.com/questions/62376115/how-to-obtain-open-weather-api-date-time-from-city-being-fetched
+const calcCurrentTime = (timezone) => {
+    const d = new Date()
+    const localTime = d.getTime()
+    const localOffset = d.getTimezoneOffset() * 60000
+    const utc = localTime + localOffset
+    const newCity = utc + 1000 * timezone
+    return new Date(newCity)
+}
+
+const calcSunTime = (time, timezone) => {
+    const d = new Date()
+    const localOffset = d.getTimezoneOffset() * 60000
+    const utc = time + localOffset
+    const newCity = utc + 1000 * timezone
+    return new Date(newCity)
+}
+
+// const fetchDailyForecast = (lat, lon) => {
+//   const newProjErrorContainer = document.querySelector('.newProjErrorContainer');
+//   console.log(lat);
+//   console.log(lon);
+//   // fetch seven day forecast
+//   fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&units=imperial&APPID=0a9fdbdfcd0f62e9bd7a200797b10d4e`, { mode: 'cors' })
+//     .then((response) => response.json())
+//     .then((response) => {
+//       console.log(response);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//       newProjErrorContainer.innerText = 'City not found';
+//     });
+// };
+
+const fetchHourlyForecast = (cityQuery) => {
+    const newProjErrorContainer = document.querySelector(
+        '.newProjErrorContainer'
+    )
+    // fetch five day/three hour forecast
+    fetch(
+        `https://api.openweathermap.org/data/2.5/forecast?q=${cityQuery}&units=imperial&APPID=0a9fdbdfcd0f62e9bd7a200797b10d4e`,
+        { mode: 'cors' }
+    )
+        .then((response) => response.json())
+        .then((response) => {
+            console.log(response)
+            const newHourlyForecastArray = []
+            // eslint-disable-next-line no-plusplus
+            for (let i = 0; i < 40; i++) {
+                // .src = `http://openweathermap.org/img/wn/${response.list[i].weather[0].icon}.png`
+                const newHourlyForecast = {
+                    date: new Date(response.list[i].dt_txt),
+                    dateText: response.list[i].dt_txt,
+                    humidity: response.list[i].main.humidity,
+                    rainChance: response.list[i].pop * 100,
+                    temperature: response.list[i].main.temp,
+                    weatherCondition: response.list[i].weather[0].main,
+                    weatherDescription: response.list[i].weather[0].description,
+                    windDegree: response.list[i].wind.deg,
+                    windDirection: toDirection(response.list[i].wind.deg),
+                    windGust: response.list[i].wind.gust,
+                    windSpeed: response.list[i].wind.speed,
+                }
+                newHourlyForecastArray.push(newHourlyForecast)
+            }
+            console.log(newHourlyForecastArray)
+            return newHourlyForecastArray
+        })
+        .catch((err) => {
+            console.log(err)
+            newProjErrorContainer.innerText = 'City not found'
+        })
+}
+
+const fetchCurrentWeather = (cityQuery) => {
+    const APIImage = document.querySelector('.APIImage')
+    const newProjErrorContainer = document.querySelector(
+        '.newProjErrorContainer'
+    )
+
+    fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${cityQuery}&units=imperial&APPID=0a9fdbdfcd0f62e9bd7a200797b10d4e`,
+        { mode: 'cors' }
+    )
+        .then((response) => response.json())
+        .then((response) => {
+            console.log(response)
+            // const {lat} = response.coord;
+            // const {lon} = response.coord;
+            // fetchDailyForecast(lat, lon);
+            submitLocation(response.name)
+            const newWeatherCard = {
+                city: response.name,
+                country: response.sys.country,
+                humidity: response.main.humidity,
+                localDate: calcCurrentTime(response.timezone),
+                sunrise: calcSunTime(
+                    response.sys.sunrise * 1000,
+                    response.timezone
+                ),
+                sunset: calcSunTime(
+                    response.sys.sunset * 1000,
+                    response.timezone
+                ),
+                tempCurrent: response.main.temp,
+                tempHigh: response.main.temp_max,
+                tempLow: response.main.temp_min,
+                weatherCondition: response.weather[0].main,
+                weatherDescription: response.weather[0].description,
+                windDegree: response.wind.deg,
+                windDirection: toDirection(response.wind.deg),
+                windSpeed: response.wind.speed,
+                windGust: response.wind.gust,
+            }
+            APIImage.src = `http://openweathermap.org/img/wn/${response.weather[0].icon}@2x.png`
+            console.log(newWeatherCard)
+            return newWeatherCard
+        })
+        .catch((err) => {
+            console.log(err)
+            newProjErrorContainer.innerText = 'City not found'
+        })
+}
+
+const APICitySearch = (input) => {
+    fetchCurrentWeather(input)
+    fetchHourlyForecast(input)
+}
+
+// Placeholder Content
+// APICitySearch('Florence')
+
 export {
     createAdditionIcon,
     createDeleteIcon,
     createForm,
     createMenuIcon,
     displayWatchlist,
+    submitLocation,
+    validateSearch,
 }

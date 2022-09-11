@@ -172,6 +172,22 @@ const createForm = (form) => {
     form.appendChild(formRow3)
 }
 
+const showForm = () => {
+    const addLocationBtn = document.querySelector('.addLocationBtn')
+    const addLocationForm = document.querySelector('.addLocationForm')
+
+    addLocationBtn.setAttribute('id', 'hidden')
+    addLocationForm.setAttribute('id', 'showBlock')
+}
+
+const hideForm = () => {
+    const addLocationBtn = document.querySelector('.addLocationBtn')
+    const addLocationForm = document.querySelector('.addLocationForm')
+
+    addLocationBtn.setAttribute('id', 'showBlock')
+    addLocationForm.setAttribute('id', 'hidden')
+}
+
 // Delete watchlist entry
 const deleteWatchlistEntry = (e) => {
     // grab arrays from storage
@@ -264,6 +280,8 @@ const validateSearch = (e) => {
         newProjErrorContainer.innerText = 'Which city?'
     } else {
         APICitySearch(newLocationInput.value)
+        hideForm()
+        newLocationInput.value = ''
     }
 }
 
@@ -421,6 +439,8 @@ export {
     createForm,
     createMenuIcon,
     displayWatchlist,
+    hideForm,
+    showForm,
     submitLocation,
     validateSearch,
 }

@@ -3,7 +3,7 @@ import validateSearch from './weatherAPI'
 import deleteIcon from './assets/delete.svg'
 import menuIcon from './assets/menuIcon.svg'
 
-const setTaskFilter = (li) => {
+const selectLocation = (li) => {
     // set content title (filter)
     const contentTitle = document.querySelector('.contentTitle')
     contentTitle.textContent = li.innerText
@@ -58,7 +58,7 @@ const createListing = (Proj, i) => {
         if (e.target.classList.contains('deleteItem')) {
             return
         }
-        setTaskFilter(location)
+        selectLocation(location)
     })
 
     createMenuIcon(location)
@@ -71,7 +71,7 @@ const createListing = (Proj, i) => {
 
 // Display entire array of locations to watchlist
 const displayWatchlist = () => {
-    // Grab projects menu
+    // Grab watchlist
     const watchlist = document.querySelector('#watchlist')
 
     // Clear location listings
@@ -86,8 +86,8 @@ const displayWatchlist = () => {
     const storageWatchlist = JSON.parse(
         localStorage.getItem('storageWatchlist')
     )
-    storageWatchlist.forEach((project) => {
-        createListing(project, i)
+    storageWatchlist.forEach((location) => {
+        createListing(location, i)
         // eslint-disable-next-line no-plusplus
         i++
     })

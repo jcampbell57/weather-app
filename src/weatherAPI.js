@@ -46,6 +46,35 @@ const calcSunTime = (time, timezone) => {
 //     });
 // };
 
+const submitLocation = (input) => {
+    // create location object
+    const newLocation = {
+        name: input,
+        selected: true,
+    }
+
+    // grab array from storage
+    const storageWatchlist = JSON.parse(
+        localStorage.getItem('storageWatchlist')
+    )
+
+    // deselect previously selected location
+    storageWatchlist.forEach((location) => {
+        if (location.selected === true) {
+            location.selected = false
+        }
+    })
+
+    // push location to array
+    storageWatchlist.push(newLocation)
+    // console.log(storageWatchlist)
+
+    // set array back into storage
+    localStorage.setItem('storageWatchlist', JSON.stringify(storageWatchlist))
+
+    // refresh watchlist
+}
+
 const fetchHourlyForecast = (cityQuery) => {
     const APIErrorContainer = document.querySelector('.APIErrorContainer')
     // fetch five day/three hour forecast
@@ -98,6 +127,7 @@ const fetchCurrentWeather = (cityQuery) => {
             // const {lat} = response.coord;
             // const {lon} = response.coord;
             // fetchDailyForecast(lat, lon);
+            submitLocation(response.name)
             const newWeatherCard = {
                 city: response.name,
                 country: response.sys.country,

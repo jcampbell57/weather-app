@@ -1,5 +1,4 @@
 import additionIcon from './assets/plus.svg'
-// import APICitySearch from './weatherAPI'
 import deleteIcon from './assets/delete.svg'
 import menuIcon from './assets/menuIcon.svg'
 
@@ -22,6 +21,7 @@ const createListing = (locationName, i) => {
     // assign class to selected location listing
     if (locationName.selected === 'true') {
         location.classList.add('selected')
+        // selectLocation(location)
     }
 
     // event listener to display selected location's weather
@@ -58,9 +58,8 @@ const displayWatchlist = () => {
     const storageWatchlist = JSON.parse(
         localStorage.getItem('storageWatchlist')
     )
-    console.log(storageWatchlist)
+    // console.log(storageWatchlist)
     storageWatchlist.forEach((location) => {
-        console.log(location.name)
         createListing(location, i)
         // eslint-disable-next-line no-plusplus
         i++
@@ -97,10 +96,61 @@ const submitLocation = (input) => {
     displayWatchlist()
 }
 
-const selectLocation = (li) => {
-    // set content title (filter)
+const displayWeather = (newWeatherCard) => {
+    // display content title
     const contentTitle = document.querySelector('.contentTitle')
-    contentTitle.textContent = li.innerText
+    contentTitle.textContent = `${newWeatherCard.city}, ${newWeatherCard.country}`
+
+    // display weather icon
+    const APIImage = document.querySelector('.APIImage')
+    APIImage.src = `http://openweathermap.org/img/wn/${newWeatherCard.weatherIcon}@2x.png`
+
+    // display description
+    const weatherDescription = document.querySelector('.weatherDescription')
+    weatherDescription.innerText = newWeatherCard.weatherDescription
+
+    // display current temperature
+    const tempContainer = document.querySelector('.tempContainer')
+    tempContainer.innerText = `${Math.round(newWeatherCard.tempCurrent)}\u00B0`
+
+    // display high/low temperatures
+    const lowTempContainer = document.querySelector('.lowTempContainer')
+    lowTempContainer.innerText = `Low: ${Math.round(
+        newWeatherCard.tempLow
+    )}\u00B0`
+    const highTempContainer = document.querySelector('.highTempContainer')
+    highTempContainer.innerText = `High: ${Math.round(
+        newWeatherCard.tempHigh
+    )}\u00B0`
+
+    // diplay current time
+    const timeContainer = document.querySelector('.timeContainer')
+    timeContainer.innerText = `Local time: ${newWeatherCard.localDate.getHours()}:${newWeatherCard.localDate.getMinutes()}`
+
+    // display sunrise/sunset times
+    const sunriseContainer = document.querySelector('.sunriseContainer')
+    sunriseContainer.innerText = `Sunrise: ${newWeatherCard.sunrise.getHours()}:${newWeatherCard.sunrise.getMinutes()}`
+    const sunsetContainer = document.querySelector('.sunsetContainer')
+    sunsetContainer.innerText = `Sunset: ${newWeatherCard.sunset.getHours()}:${newWeatherCard.sunset.getMinutes()}`
+
+    // display wind
+    const windContainer = document.querySelector('.windContainer')
+    windContainer.innerText = `Wind: ${Math.round(
+        newWeatherCard.windSpeed
+    )}mph, ${newWeatherCard.windDirection} (${newWeatherCard.windDegree}\u00B0)`
+
+    // display humidity
+    const humidityContainer = document.querySelector('.humidityContainer')
+    humidityContainer.innerText = `Humidity: ${newWeatherCard.humidity}%`
+}
+
+const selectLocation = (li) => {
+    // set content title
+    // const contentTitle = document.querySelector('.contentTitle')
+    // contentTitle.textContent = li.innerText
+
+    // Fetch current weather
+    APICitySearch(li.innerText)
 
     // grab locations array from storage
     const storageWatchlist = JSON.parse(
@@ -266,25 +316,6 @@ const createAdditionIcon = (li) => {
     li.appendChild(newAdditionIcon)
 }
 
-const validateSearch = (e) => {
-    e.preventDefault()
-    // grab dom elements
-    const newLocationInput = document.querySelector('.newLocationInput')
-    const newProjErrorContainer = document.querySelector(
-        '.newProjErrorContainer'
-    )
-    // reset error
-    newProjErrorContainer.innerText = ''
-    // check for search term
-    if (newLocationInput.value === '') {
-        newProjErrorContainer.innerText = 'Which city?'
-    } else {
-        APICitySearch(newLocationInput.value)
-        hideForm()
-        newLocationInput.value = ''
-    }
-}
-
 // #########################
 // Openweather API Functions
 // #########################
@@ -376,7 +407,7 @@ const fetchHourlyForecast = (cityQuery) => {
 }
 
 const fetchCurrentWeather = (cityQuery) => {
-    const APIImage = document.querySelector('.APIImage')
+    // const APIImage = document.querySelector('.APIImage')
     const newProjErrorContainer = document.querySelector(
         '.newProjErrorContainer'
     )
@@ -410,13 +441,15 @@ const fetchCurrentWeather = (cityQuery) => {
                 tempLow: response.main.temp_min,
                 weatherCondition: response.weather[0].main,
                 weatherDescription: response.weather[0].description,
+                weatherIcon: response.weather[0].icon,
                 windDegree: response.wind.deg,
                 windDirection: toDirection(response.wind.deg),
                 windSpeed: response.wind.speed,
                 windGust: response.wind.gust,
             }
-            APIImage.src = `http://openweathermap.org/img/wn/${response.weather[0].icon}@2x.png`
+            // APIImage.src = `http://openweathermap.org/img/wn/${response.weather[0].icon}@2x.png`
             console.log(newWeatherCard)
+            displayWeather(newWeatherCard)
             return newWeatherCard
         })
         .catch((err) => {
@@ -430,8 +463,24 @@ const APICitySearch = (input) => {
     fetchHourlyForecast(input)
 }
 
-// Placeholder Content
-// APICitySearch('Florence')
+const validateSearch = (e) => {
+    e.preventDefault()
+    // grab dom elements
+    const newLocationInput = document.querySelector('.newLocationInput')
+    const newProjErrorContainer = document.querySelector(
+        '.newProjErrorContainer'
+    )
+    // reset error
+    newProjErrorContainer.innerText = ''
+    // check for search term
+    if (newLocationInput.value === '') {
+        newProjErrorContainer.innerText = 'Which city?'
+    } else {
+        APICitySearch(newLocationInput.value)
+        hideForm()
+        newLocationInput.value = ''
+    }
+}
 
 export {
     createAdditionIcon,

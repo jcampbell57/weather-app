@@ -68,32 +68,74 @@ const createMenu = () => {
     return menu
 }
 
-const createWeatherAPI = () => {
+const createWeatherCard = () => {
     // create Weather API container
     const WeatherAPIContainter = document.createElement('div')
     WeatherAPIContainter.classList.add('WeatherAPIContainter', 'content')
-    // WeatherAPIContainter.id = '';
 
     // create API title
     const APITitle = document.createElement('h3')
     APITitle.classList.add('contentTitle')
     APITitle.innerText = 'Weatherserve'
 
-    // create API image container
-    // const APIImageContainer = document.createElement('div');
-    // APIImageContainer.classList.add('APIImageContainer');
-
     // create API img
     const APIImage = document.createElement('img')
     APIImage.classList.add('APIImage')
 
+    // create description container
+    const descriptionContainer = document.createElement('span')
+    descriptionContainer.classList.add('weatherDescription')
+
+    // create current temp container
+    const tempContainer = document.createElement('span')
+    tempContainer.classList.add('tempContainer')
+
+    // create high/low temp container
+    const highLowContainer = document.createElement('div')
+    highLowContainer.classList.add('highLowContainer')
+
+    const lowTempContainer = document.createElement('span')
+    lowTempContainer.classList.add('lowTempContainer')
+    highLowContainer.appendChild(lowTempContainer)
+
+    const highTempContainer = document.createElement('span')
+    highTempContainer.classList.add('highTempContainer')
+    highLowContainer.appendChild(highTempContainer)
+
+    // create current time container
+    const timeContainer = document.createElement('span')
+    timeContainer.classList.add('timeContainer')
+
+    // create sunrise/sunset container
+    const sunriseSunsetContainer = document.createElement('div')
+    sunriseSunsetContainer.classList.add('sunriseSunsetContainer')
+
+    const sunriseContainer = document.createElement('span')
+    sunriseContainer.classList.add('sunriseContainer')
+    sunriseSunsetContainer.appendChild(sunriseContainer)
+
+    const sunsetContainer = document.createElement('span')
+    sunsetContainer.classList.add('sunsetContainer')
+    sunriseSunsetContainer.appendChild(sunsetContainer)
+
+    // create wind container
+    const windContainer = document.createElement('span')
+    windContainer.classList.add('windContainer')
+
+    // create humidity container
+    const humidityContainer = document.createElement('span')
+    humidityContainer.classList.add('humidityContainer')
+
     // Append
     WeatherAPIContainter.appendChild(APITitle)
-    // APIImageContainer.appendChild(APIImage);
-
     WeatherAPIContainter.appendChild(APIImage)
-    // WeatherAPIContainter.appendChild(APIImageContainer);
-    // container.appendChild(WeatherAPIContainter);
+    WeatherAPIContainter.appendChild(descriptionContainer)
+    WeatherAPIContainter.appendChild(tempContainer)
+    WeatherAPIContainter.appendChild(highLowContainer)
+    WeatherAPIContainter.appendChild(timeContainer)
+    WeatherAPIContainter.appendChild(sunriseSunsetContainer)
+    WeatherAPIContainter.appendChild(windContainer)
+    WeatherAPIContainter.appendChild(humidityContainer)
 
     return WeatherAPIContainter
 }
@@ -104,7 +146,7 @@ const createContent = () => {
     content.classList.add('content')
 
     // create weather app
-    content.appendChild(createWeatherAPI())
+    content.appendChild(createWeatherCard())
 
     return content
 }

@@ -101,6 +101,11 @@ header {
     border-radius: 8px;
 }
 
+#watchlist {
+    max-height: 80%;
+    overflow: auto;
+}
+
 .watchlist li:hover,
 .addLocationBtn:hover {
     background-color: rgb(245, 245, 245, 0.3);
@@ -116,6 +121,15 @@ header {
 li.selected {
     background-color: rgb(245, 245, 245, 0.3);
     box-shadow: 2px 2px 6px rgb(0, 0, 0, 0.2);
+}
+
+.deleteItem {
+    margin-left: auto;
+}
+
+.deleteItem:hover {
+    filter: invert(7%) sepia(51%) saturate(5951%) hue-rotate(350deg)
+        brightness(140%) contrast(136%);
 }
 
 /* Form styling */

@@ -222,24 +222,32 @@ li.selected {
     border-radius: 8px;
 }
 
-.APISearchBtn {
-    background-color: var(--accent);
-    color: var(--white-ish);
-    padding: 0.5rem 1.5rem;
-    border-radius: 0.5rem;
+.forecastContainer {
+    max-width: 95%;
 }
 
-.APISearchBtn:hover {
-    cursor: pointer;
-    box-shadow: 1px 1px 1px rgb(0, 0, 0, 0.2);
+.forecastTable {
+    display: flex;
 }
 
-.APISearchBtn:active {
-    box-shadow: 1px 1px 1px rgb(0, 0, 0, 0.4);
+.forecastRow {
+    display: flex;
+    gap: 0.5rem;
+    /* enable horizontal scroll */
+    overflow-x: scroll;
 }
 
-.APIErrorContainer {
-    color: var(--error);
+/* hide scrollbar, retain function */
+.forecastRow::-webkit-scrollbar {
+    display: none;
+}
+
+.forecastCell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    min-width: max-content;
 }
 
 /* Footer styling */

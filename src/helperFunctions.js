@@ -144,6 +144,62 @@ const displayWeather = (newWeatherCard) => {
     humidityContainer.innerText = `Humidity: ${newWeatherCard.humidity}%`
 }
 
+const displayForecast = (newHourlyForecastArray) => {
+    const forecastRow = document.querySelector('.forecastRow')
+
+    // remove any forecast cells
+    const oldForecast = forecastRow.childElementCount
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < oldForecast; i++) {
+        forecastRow.firstChild.remove()
+    }
+
+    // Add new forecast cells
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < newHourlyForecastArray.length; i++) {
+        const forecastCell = document.createElement('td')
+        forecastCell.classList.add('forecastCell')
+
+        // display date
+        const forecastDate = document.createElement('span')
+        forecastDate.classList.add('forecastDate')
+        forecastDate.innerText = `${
+            newHourlyForecastArray[i].date.getMonth() + 1
+        }/${newHourlyForecastArray[i].date.getDate()}`
+        forecastCell.appendChild(forecastDate)
+
+        // display time
+        const forecastTime = document.createElement('span')
+        forecastTime.classList.add('forecastTime')
+        forecastTime.innerText =
+            newHourlyForecastArray[i].date.toLocaleTimeString()
+        forecastCell.appendChild(forecastTime)
+
+        // display weather icon
+        const weatherForecastIcon = document.createElement('img')
+        weatherForecastIcon.classList.add('weatherForecastIcon')
+        weatherForecastIcon.src = `http://openweathermap.org/img/wn/${newHourlyForecastArray[i].weatherIcon}.png`
+        forecastCell.appendChild(weatherForecastIcon)
+
+        // display weather description
+        const forecastWeatherDescription = document.createElement('span')
+        forecastWeatherDescription.classList.add('forecastWeatherDescription')
+        forecastWeatherDescription.innerText =
+            newHourlyForecastArray[i].weatherDescription
+        forecastCell.appendChild(forecastWeatherDescription)
+
+        // display forecast temperature
+        const forecastTemp = document.createElement('span')
+        forecastTemp.classList.add('forecastTemp')
+        forecastTemp.innerText = `${Math.round(
+            newHourlyForecastArray[i].temperature
+        )}\u00B0`
+        forecastCell.appendChild(forecastTemp)
+
+        forecastRow.appendChild(forecastCell)
+    }
+}
+
 const selectLocation = (li) => {
     // set content title
     // const contentTitle = document.querySelector('.contentTitle')
@@ -381,7 +437,6 @@ const fetchHourlyForecast = (cityQuery) => {
             const newHourlyForecastArray = []
             // eslint-disable-next-line no-plusplus
             for (let i = 0; i < 40; i++) {
-                // .src = `http://openweathermap.org/img/wn/${response.list[i].weather[0].icon}.png`
                 const newHourlyForecast = {
                     date: new Date(response.list[i].dt_txt),
                     dateText: response.list[i].dt_txt,
@@ -390,6 +445,7 @@ const fetchHourlyForecast = (cityQuery) => {
                     temperature: response.list[i].main.temp,
                     weatherCondition: response.list[i].weather[0].main,
                     weatherDescription: response.list[i].weather[0].description,
+                    weatherIcon: response.list[i].weather[0].icon,
                     windDegree: response.list[i].wind.deg,
                     windDirection: toDirection(response.list[i].wind.deg),
                     windGust: response.list[i].wind.gust,
@@ -398,6 +454,7 @@ const fetchHourlyForecast = (cityQuery) => {
                 newHourlyForecastArray.push(newHourlyForecast)
             }
             console.log(newHourlyForecastArray)
+            displayForecast(newHourlyForecastArray)
             return newHourlyForecastArray
         })
         .catch((err) => {

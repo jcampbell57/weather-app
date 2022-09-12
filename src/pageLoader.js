@@ -133,11 +133,20 @@ const createWeatherCard = () => {
     const forecastTitle = document.createElement('span')
     forecastTitle.classList.add('forecastTitle')
     forecastTitle.innerText = 'Five day, three hour forecast:'
-    forecastContainer.appendChild(forecastTitle)
 
     const forecastTable = document.createElement('table')
     forecastTable.classList.add('forecastTable')
     forecastContainer.appendChild(forecastTable)
+
+    const forecastRow = document.createElement('tr')
+    forecastRow.classList.add('forecastRow')
+    forecastTable.appendChild(forecastRow)
+
+    // make scrollwheel functional with horizontal scrolling
+    forecastRow.addEventListener('wheel', (e) => {
+        e.preventDefault()
+        forecastRow.scrollLeft += e.deltaY
+    })
 
     // Append
     WeatherAPIContainter.appendChild(APITitle)
@@ -149,6 +158,7 @@ const createWeatherCard = () => {
     WeatherAPIContainter.appendChild(sunriseSunsetContainer)
     WeatherAPIContainter.appendChild(windContainer)
     WeatherAPIContainter.appendChild(humidityContainer)
+    WeatherAPIContainter.appendChild(forecastTitle)
     WeatherAPIContainter.appendChild(forecastContainer)
 
     return WeatherAPIContainter

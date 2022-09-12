@@ -213,6 +213,7 @@ li.selected {
     margin: 0rem;
     background-color: var(--panel);
     border-radius: 1rem;
+    height: 100%;
 }
 
 .contentTitle {

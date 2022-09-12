@@ -126,6 +126,19 @@ const createWeatherCard = () => {
     const humidityContainer = document.createElement('span')
     humidityContainer.classList.add('humidityContainer')
 
+    // create forecast container
+    const forecastContainer = document.createElement('div')
+    forecastContainer.classList.add('forecastContainer')
+
+    const forecastTitle = document.createElement('span')
+    forecastTitle.classList.add('forecastTitle')
+    forecastTitle.innerText = 'Five day, three hour forecast:'
+    forecastContainer.appendChild(forecastTitle)
+
+    const forecastTable = document.createElement('table')
+    forecastTable.classList.add('forecastTable')
+    forecastContainer.appendChild(forecastTable)
+
     // Append
     WeatherAPIContainter.appendChild(APITitle)
     WeatherAPIContainter.appendChild(APIImage)
@@ -136,6 +149,7 @@ const createWeatherCard = () => {
     WeatherAPIContainter.appendChild(sunriseSunsetContainer)
     WeatherAPIContainter.appendChild(windContainer)
     WeatherAPIContainter.appendChild(humidityContainer)
+    WeatherAPIContainter.appendChild(forecastContainer)
 
     return WeatherAPIContainter
 }
@@ -145,7 +159,7 @@ const createContent = () => {
     const content = document.createElement('div')
     content.classList.add('content')
 
-    // create weather app
+    // display weather card
     content.appendChild(createWeatherCard())
 
     return content

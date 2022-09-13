@@ -107,7 +107,7 @@ const displayWeather = (newWeatherCard) => {
 
     // display description
     const weatherDescription = document.querySelector('.weatherDescription')
-    weatherDescription.innerText = newWeatherCard.weatherDescription
+    weatherDescription.innerText = `Weather: ${newWeatherCard.weatherDescription}`
 
     // display current temperature
     const tempContainer = document.querySelector('.tempContainer')
@@ -115,11 +115,11 @@ const displayWeather = (newWeatherCard) => {
 
     // display high/low temperatures
     const lowTempContainer = document.querySelector('.lowTempContainer')
-    lowTempContainer.innerText = `Low: ${Math.round(
+    lowTempContainer.innerText = `Low temperature: ${Math.round(
         newWeatherCard.tempLow
     )}\u00B0`
     const highTempContainer = document.querySelector('.highTempContainer')
-    highTempContainer.innerText = `High: ${Math.round(
+    highTempContainer.innerText = `High temperature: ${Math.round(
         newWeatherCard.tempHigh
     )}\u00B0`
 
@@ -201,10 +201,6 @@ const displayForecast = (newHourlyForecastArray) => {
 }
 
 const selectLocation = (li) => {
-    // set content title
-    // const contentTitle = document.querySelector('.contentTitle')
-    // contentTitle.textContent = li.innerText
-
     // Fetch current weather
     APICitySearch(li.innerText)
 
@@ -479,7 +475,6 @@ const fetchCurrentWeather = (cityQuery) => {
             // const {lat} = response.coord;
             // const {lon} = response.coord;
             // fetchDailyForecast(lat, lon);
-            submitLocation(response.name)
             const newWeatherCard = {
                 city: response.name,
                 country: response.sys.country,
@@ -506,6 +501,7 @@ const fetchCurrentWeather = (cityQuery) => {
             }
             // APIImage.src = `http://openweathermap.org/img/wn/${response.weather[0].icon}@2x.png`
             console.log(newWeatherCard)
+            submitLocation(`${newWeatherCard.city}, ${newWeatherCard.country}`)
             displayWeather(newWeatherCard)
             return newWeatherCard
         })

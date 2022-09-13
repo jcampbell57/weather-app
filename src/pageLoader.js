@@ -74,9 +74,12 @@ const createWeatherCard = () => {
     WeatherAPIContainter.classList.add('WeatherAPIContainter', 'content')
 
     // create API title
-    const APITitle = document.createElement('h3')
+    const APITitle = document.createElement('h2')
     APITitle.classList.add('contentTitle')
-    APITitle.innerText = 'Weatherserve'
+
+    // create current temp container
+    const tempContainer = document.createElement('h1')
+    tempContainer.classList.add('tempContainer')
 
     // create API img
     const APIImage = document.createElement('img')
@@ -86,37 +89,25 @@ const createWeatherCard = () => {
     const descriptionContainer = document.createElement('span')
     descriptionContainer.classList.add('weatherDescription')
 
-    // create current temp container
-    const tempContainer = document.createElement('span')
-    tempContainer.classList.add('tempContainer')
-
-    // create high/low temp container
-    const highLowContainer = document.createElement('div')
-    highLowContainer.classList.add('highLowContainer')
-
+    // create low temp container
     const lowTempContainer = document.createElement('span')
     lowTempContainer.classList.add('lowTempContainer')
-    highLowContainer.appendChild(lowTempContainer)
 
+    // create high temp container
     const highTempContainer = document.createElement('span')
     highTempContainer.classList.add('highTempContainer')
-    highLowContainer.appendChild(highTempContainer)
 
     // create current time container
     const timeContainer = document.createElement('span')
     timeContainer.classList.add('timeContainer')
 
-    // create sunrise/sunset container
-    const sunriseSunsetContainer = document.createElement('div')
-    sunriseSunsetContainer.classList.add('sunriseSunsetContainer')
-
+    // create sunrise container
     const sunriseContainer = document.createElement('span')
     sunriseContainer.classList.add('sunriseContainer')
-    sunriseSunsetContainer.appendChild(sunriseContainer)
 
+    // create sunset container
     const sunsetContainer = document.createElement('span')
     sunsetContainer.classList.add('sunsetContainer')
-    sunriseSunsetContainer.appendChild(sunsetContainer)
 
     // create wind container
     const windContainer = document.createElement('span')
@@ -130,7 +121,7 @@ const createWeatherCard = () => {
     const forecastContainer = document.createElement('div')
     forecastContainer.classList.add('forecastContainer')
 
-    const forecastTitle = document.createElement('span')
+    const forecastTitle = document.createElement('h2')
     forecastTitle.classList.add('forecastTitle')
     forecastTitle.innerText = 'Five day, three hour forecast:'
 
@@ -151,11 +142,16 @@ const createWeatherCard = () => {
     // Append
     WeatherAPIContainter.appendChild(APITitle)
     WeatherAPIContainter.appendChild(APIImage)
-    WeatherAPIContainter.appendChild(descriptionContainer)
     WeatherAPIContainter.appendChild(tempContainer)
-    WeatherAPIContainter.appendChild(highLowContainer)
+    WeatherAPIContainter.appendChild(document.createElement('br'))
+    WeatherAPIContainter.appendChild(descriptionContainer)
+    WeatherAPIContainter.appendChild(lowTempContainer)
+    WeatherAPIContainter.appendChild(highTempContainer)
+    WeatherAPIContainter.appendChild(document.createElement('br'))
     WeatherAPIContainter.appendChild(timeContainer)
-    WeatherAPIContainter.appendChild(sunriseSunsetContainer)
+    WeatherAPIContainter.appendChild(sunriseContainer)
+    WeatherAPIContainter.appendChild(sunsetContainer)
+    WeatherAPIContainter.appendChild(document.createElement('br'))
     WeatherAPIContainter.appendChild(windContainer)
     WeatherAPIContainter.appendChild(humidityContainer)
     WeatherAPIContainter.appendChild(forecastTitle)

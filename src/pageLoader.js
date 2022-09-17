@@ -76,54 +76,73 @@ const createWeatherCard = () => {
     // create API title
     const APITitle = document.createElement('h2')
     APITitle.classList.add('contentTitle')
-
-    // create current temp container
-    const tempContainer = document.createElement('h1')
-    tempContainer.classList.add('tempContainer')
+    WeatherAPIContainter.appendChild(APITitle)
 
     // create API img
     const APIImage = document.createElement('img')
     APIImage.classList.add('APIImage')
+    WeatherAPIContainter.appendChild(APIImage)
+
+    // create current temp container
+    const tempContainer = document.createElement('h1')
+    tempContainer.classList.add('tempContainer')
+    WeatherAPIContainter.appendChild(tempContainer)
+
+    WeatherAPIContainter.appendChild(document.createElement('br'))
 
     // create description container
     const descriptionContainer = document.createElement('span')
     descriptionContainer.classList.add('weatherDescription')
+    WeatherAPIContainter.appendChild(descriptionContainer)
 
     // create low temp container
     const lowTempContainer = document.createElement('span')
     lowTempContainer.classList.add('lowTempContainer')
+    WeatherAPIContainter.appendChild(lowTempContainer)
 
     // create high temp container
     const highTempContainer = document.createElement('span')
     highTempContainer.classList.add('highTempContainer')
+    WeatherAPIContainter.appendChild(highTempContainer)
+
+    WeatherAPIContainter.appendChild(document.createElement('br'))
 
     // create current time container
     const timeContainer = document.createElement('span')
     timeContainer.classList.add('timeContainer')
+    WeatherAPIContainter.appendChild(timeContainer)
 
     // create sunrise container
     const sunriseContainer = document.createElement('span')
     sunriseContainer.classList.add('sunriseContainer')
+    WeatherAPIContainter.appendChild(sunriseContainer)
 
     // create sunset container
     const sunsetContainer = document.createElement('span')
     sunsetContainer.classList.add('sunsetContainer')
+    WeatherAPIContainter.appendChild(sunsetContainer)
+
+    WeatherAPIContainter.appendChild(document.createElement('br'))
 
     // create wind container
     const windContainer = document.createElement('span')
     windContainer.classList.add('windContainer')
+    WeatherAPIContainter.appendChild(windContainer)
 
     // create humidity container
     const humidityContainer = document.createElement('span')
     humidityContainer.classList.add('humidityContainer')
+    WeatherAPIContainter.appendChild(humidityContainer)
 
     // create forecast container
-    const forecastContainer = document.createElement('div')
-    forecastContainer.classList.add('forecastContainer')
-
     const forecastTitle = document.createElement('h2')
     forecastTitle.classList.add('forecastTitle')
     forecastTitle.innerText = 'Five day, three hour forecast:'
+    WeatherAPIContainter.appendChild(forecastTitle)
+
+    const forecastContainer = document.createElement('div')
+    forecastContainer.classList.add('forecastContainer')
+    WeatherAPIContainter.appendChild(forecastContainer)
 
     const forecastTable = document.createElement('table')
     forecastTable.classList.add('forecastTable')
@@ -138,24 +157,6 @@ const createWeatherCard = () => {
         e.preventDefault()
         forecastRow.scrollLeft += e.deltaY
     })
-
-    // Append
-    WeatherAPIContainter.appendChild(APITitle)
-    WeatherAPIContainter.appendChild(APIImage)
-    WeatherAPIContainter.appendChild(tempContainer)
-    WeatherAPIContainter.appendChild(document.createElement('br'))
-    WeatherAPIContainter.appendChild(descriptionContainer)
-    WeatherAPIContainter.appendChild(lowTempContainer)
-    WeatherAPIContainter.appendChild(highTempContainer)
-    WeatherAPIContainter.appendChild(document.createElement('br'))
-    WeatherAPIContainter.appendChild(timeContainer)
-    WeatherAPIContainter.appendChild(sunriseContainer)
-    WeatherAPIContainter.appendChild(sunsetContainer)
-    WeatherAPIContainter.appendChild(document.createElement('br'))
-    WeatherAPIContainter.appendChild(windContainer)
-    WeatherAPIContainter.appendChild(humidityContainer)
-    WeatherAPIContainter.appendChild(forecastTitle)
-    WeatherAPIContainter.appendChild(forecastContainer)
 
     return WeatherAPIContainter
 }

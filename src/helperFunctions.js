@@ -61,6 +61,9 @@ const displayWatchlist = () => {
     // console.log(storageWatchlist)
     storageWatchlist.forEach((location) => {
         createListing(location, i)
+        if (location.selected === true) {
+            console.log(`fetch weather for (${location.name}) pls`)
+        }
         // eslint-disable-next-line no-plusplus
         i++
     })
@@ -516,6 +519,16 @@ const APICitySearch = (input) => {
     fetchHourlyForecast(input)
 }
 
+const addDefaultContent = () => {
+    APICitySearch('San Francisco')
+    APICitySearch('Seattle')
+    APICitySearch('Honolulu')
+    APICitySearch('Florence')
+    APICitySearch('Amsterdam')
+    APICitySearch('Paris')
+    APICitySearch('Tokyo')
+}
+
 const validateSearch = (e) => {
     e.preventDefault()
     // grab dom elements
@@ -536,6 +549,7 @@ const validateSearch = (e) => {
 }
 
 export {
+    addDefaultContent,
     createAdditionIcon,
     createDeleteIcon,
     createForm,

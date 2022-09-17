@@ -1,3 +1,5 @@
+import { addDefaultContent, displayWatchlist } from './helperFunctions'
+
 // class locations {
 //     constructor(locationName) {
 //         this.name = locationName
@@ -14,9 +16,11 @@ const initiateStorage = () => {
             'storageWatchlist',
             JSON.stringify(storageWatchlistArray)
         )
+        addDefaultContent()
+    } else {
+        // insert content from local storage if there is any
+        displayWatchlist()
     }
 }
-
-// insert content from local storage if there is any
 
 export default initiateStorage

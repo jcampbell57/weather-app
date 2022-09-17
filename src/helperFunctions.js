@@ -19,7 +19,7 @@ const createListing = (locationName, i) => {
     location.classList.add(`location`)
     location.setAttribute('id', `${i}`)
     // assign class to selected location listing
-    if (locationName.selected === 'true') {
+    if (locationName.selected === true) {
         location.classList.add('selected')
         // selectLocation(location)
     }
@@ -62,7 +62,7 @@ const displayWatchlist = () => {
     storageWatchlist.forEach((location) => {
         createListing(location, i)
         if (location.selected === true) {
-            console.log(`fetch weather for (${location.name}) pls`)
+            APICitySearch(location.name)
         }
         // eslint-disable-next-line no-plusplus
         i++
@@ -204,9 +204,6 @@ const displayForecast = (newHourlyForecastArray) => {
 }
 
 const selectLocation = (li) => {
-    // Fetch current weather
-    APICitySearch(li.innerText)
-
     // grab locations array from storage
     const storageWatchlist = JSON.parse(
         localStorage.getItem('storageWatchlist')
@@ -214,15 +211,15 @@ const selectLocation = (li) => {
 
     // deselect all locations
     storageWatchlist.forEach((location) => {
-        if (location.selected === 'true') {
-            location.selected = 'false'
+        if (location.selected === true) {
+            location.selected = false
         }
     })
 
     // Select location if one is chosen (main menu selection is handled in event listener)
-    if (li.getAttribute('class') === 'location') {
+    if (li.classList.contains('location')) {
         const selectedLocationId = li.getAttribute('id')
-        storageWatchlist[selectedLocationId].selected = 'true'
+        storageWatchlist[selectedLocationId].selected = true
     }
 
     // set locations array back into localStorage
@@ -462,7 +459,7 @@ const fetchHourlyForecast = (cityQuery) => {
         })
 }
 
-const fetchCurrentWeather = (cityQuery) => {
+const fetchCurrentWeather = (cityQuery, e) => {
     // const APIImage = document.querySelector('.APIImage')
     const newProjErrorContainer = document.querySelector(
         '.newProjErrorContainer'
@@ -504,7 +501,14 @@ const fetchCurrentWeather = (cityQuery) => {
             }
             // APIImage.src = `http://openweathermap.org/img/wn/${response.weather[0].icon}@2x.png`
             console.log(newWeatherCard)
-            submitLocation(`${newWeatherCard.city}, ${newWeatherCard.country}`)
+            if (
+                e !== undefined &&
+                e.target.classList.contains('addBtn') === true
+            ) {
+                submitLocation(
+                    `${newWeatherCard.city}, ${newWeatherCard.country}`
+                )
+            }
             displayWeather(newWeatherCard)
             return newWeatherCard
         })
@@ -514,19 +518,19 @@ const fetchCurrentWeather = (cityQuery) => {
         })
 }
 
-const APICitySearch = (input) => {
-    fetchCurrentWeather(input)
+const APICitySearch = (input, e) => {
+    fetchCurrentWeather(input, e)
     fetchHourlyForecast(input)
 }
 
 const addDefaultContent = () => {
-    APICitySearch('San Francisco')
-    APICitySearch('Seattle')
-    APICitySearch('Honolulu')
-    APICitySearch('Florence')
-    APICitySearch('Amsterdam')
-    APICitySearch('Paris')
-    APICitySearch('Tokyo')
+    submitLocation('San Francisco, US')
+    // submitLocation('Seattle')
+    // submitLocation('Honolulu')
+    // submitLocation('Florence')
+    // submitLocation('Amsterdam')
+    // submitLocation('Paris')
+    // submitLocation('Tokyo')
 }
 
 const validateSearch = (e) => {
@@ -542,7 +546,7 @@ const validateSearch = (e) => {
     if (newLocationInput.value === '') {
         newProjErrorContainer.innerText = 'Which city?'
     } else {
-        APICitySearch(newLocationInput.value)
+        APICitySearch(newLocationInput.value, e)
         hideForm()
         newLocationInput.value = ''
     }

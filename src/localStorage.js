@@ -1,12 +1,5 @@
 import { addDefaultContent, displayWatchlist } from './helperFunctions'
 
-// class locations {
-//     constructor(locationName) {
-//         this.name = locationName
-//         this.selected = selected
-//     }
-// }
-
 // Initiate storage arrays if localStorage is empty
 const initiateStorage = () => {
     const storageWatchlistArray = []

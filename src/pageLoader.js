@@ -1,8 +1,4 @@
-import {
-    createAdditionIcon,
-    createForm,
-    // displayWatchlist,
-} from './helperFunctions'
+import { createAdditionIcon, createForm } from './helperFunctions'
 import githubIcon from './assets/GitHub-light-32px.png'
 import logoIcon from './assets/logoIcon.svg'
 
@@ -37,8 +33,6 @@ const createMenu = () => {
     const watchlist = document.createElement('ul')
     watchlist.setAttribute('class', 'watchlist')
     watchlist.setAttribute('id', 'watchlist')
-
-    // displayWatchlist()
 
     // Generate add location container
     const addLocationContainer = document.createElement('ul')

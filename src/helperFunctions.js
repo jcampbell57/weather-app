@@ -21,7 +21,6 @@ const createListing = (locationName, i) => {
     // assign class to selected location listing
     if (locationName.selected === true) {
         location.classList.add('selected')
-        // selectLocation(location)
     }
 
     // event listener to display selected location's weather
@@ -90,7 +89,6 @@ const submitLocation = (input) => {
 
     // push location to array
     storageWatchlist.push(newLocation)
-    // console.log(storageWatchlist)
 
     // set array back into storage
     localStorage.setItem('storageWatchlist', JSON.stringify(storageWatchlist))
@@ -265,9 +263,7 @@ const createForm = (form) => {
 
     // row three: assign error class and text
     const formRow3 = document.createElement('div')
-    // formRow3.setAttribute('id', 'hidden')
     formRow3.setAttribute('class', 'newProjErrorContainer')
-    // formRow3.innerText = 'Which city?'
 
     form.appendChild(formRow1)
     form.appendChild(formRow2)
@@ -299,7 +295,6 @@ const deleteWatchlistEntry = (e) => {
 
     // Identify entry to delete
     const doomedIndex = e.target.getAttribute('id')
-    // const doomedName = storageWatchlist[doomedIndex].name;
 
     // delete entry
     storageWatchlist.splice(doomedIndex, 1)
@@ -308,12 +303,6 @@ const deleteWatchlistEntry = (e) => {
     localStorage.setItem('storageWatchlist', JSON.stringify(storageWatchlist))
 
     // If doomed entry was selected, clear content display
-    // const contentTitle = document.querySelector('.contentTitle');
-    // const allTasksClassList = document.querySelector('.allTasks').classList
-    // if (contentTitle.textContent === doomedName) {
-    //     contentTitle.textContent = 'All tasks'
-    //     allTasksClassList.add('selected')
-    // }
 
     // refresh watchist
     displayWatchlist()
@@ -402,22 +391,6 @@ const calcSunTime = (time, timezone) => {
     return new Date(newCity)
 }
 
-// const fetchDailyForecast = (lat, lon) => {
-//   const newProjErrorContainer = document.querySelector('.newProjErrorContainer');
-//   console.log(lat);
-//   console.log(lon);
-//   // fetch seven day forecast
-//   fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&units=imperial&APPID=0a9fdbdfcd0f62e9bd7a200797b10d4e`, { mode: 'cors' })
-//     .then((response) => response.json())
-//     .then((response) => {
-//       console.log(response);
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//       newProjErrorContainer.innerText = 'City not found';
-//     });
-// };
-
 const fetchHourlyForecast = (cityQuery) => {
     const newProjErrorContainer = document.querySelector(
         '.newProjErrorContainer'
@@ -472,9 +445,6 @@ const fetchCurrentWeather = (cityQuery, e) => {
         .then((response) => response.json())
         .then((response) => {
             console.log(response)
-            // const {lat} = response.coord;
-            // const {lon} = response.coord;
-            // fetchDailyForecast(lat, lon);
             const newWeatherCard = {
                 city: response.name,
                 country: response.sys.country,
@@ -525,12 +495,12 @@ const APICitySearch = (input, e) => {
 
 const addDefaultContent = () => {
     submitLocation('San Francisco, US')
-    // submitLocation('Seattle')
-    // submitLocation('Honolulu')
-    // submitLocation('Florence')
-    // submitLocation('Amsterdam')
-    // submitLocation('Paris')
-    // submitLocation('Tokyo')
+    submitLocation('Seattle, US')
+    submitLocation('Honolulu, US')
+    submitLocation('Florence, IT')
+    submitLocation('Amsterdam, NL')
+    submitLocation('Paris, FR')
+    submitLocation('Tokyo, JP')
 }
 
 const validateSearch = (e) => {

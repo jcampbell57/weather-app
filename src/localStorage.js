@@ -4,7 +4,7 @@ import { addDefaultContent, displayWatchlist } from './helperFunctions'
 const initiateStorage = () => {
     const storageWatchlistArray = []
 
-    if (localStorage.length === 0) {
+    if (localStorage.storageWatchlist === undefined) {
         localStorage.setItem(
             'storageWatchlist',
             JSON.stringify(storageWatchlistArray)

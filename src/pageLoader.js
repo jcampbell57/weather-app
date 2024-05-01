@@ -82,7 +82,7 @@ const createWeatherCard = () => {
     tempContainer.classList.add('tempContainer')
     WeatherAPIContainter.appendChild(tempContainer)
 
-    WeatherAPIContainter.appendChild(document.createElement('br'))
+    // WeatherAPIContainter.appendChild(document.createElement('br'))
 
     // create description container
     const descriptionContainer = document.createElement('span')

@@ -57,7 +57,6 @@ const displayWatchlist = () => {
     const storageWatchlist = JSON.parse(
         localStorage.getItem('storageWatchlist')
     )
-    // console.log(storageWatchlist)
     storageWatchlist.forEach((location) => {
         createListing(location, i)
         if (location.selected === true) {
@@ -402,7 +401,6 @@ const fetchHourlyForecast = (cityQuery) => {
     )
         .then((response) => response.json())
         .then((response) => {
-            console.log(response)
             const newHourlyForecastArray = []
             // eslint-disable-next-line no-plusplus
             for (let i = 0; i < 40; i++) {
@@ -422,7 +420,6 @@ const fetchHourlyForecast = (cityQuery) => {
                 }
                 newHourlyForecastArray.push(newHourlyForecast)
             }
-            console.log(newHourlyForecastArray)
             displayForecast(newHourlyForecastArray)
             return newHourlyForecastArray
         })
@@ -444,7 +441,6 @@ const fetchCurrentWeather = (cityQuery, e) => {
     )
         .then((response) => response.json())
         .then((response) => {
-            console.log(response)
             const newWeatherCard = {
                 city: response.name,
                 country: response.sys.country,
@@ -470,7 +466,6 @@ const fetchCurrentWeather = (cityQuery, e) => {
                 windGust: response.wind.gust,
             }
             // APIImage.src = `http://openweathermap.org/img/wn/${response.weather[0].icon}@2x.png`
-            console.log(newWeatherCard)
             if (
                 e !== undefined &&
                 e.target.classList.contains('addBtn') === true
